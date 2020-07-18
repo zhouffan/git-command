@@ -131,3 +131,35 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 
 
 
+
+------------
+
+
+------------
+
+
+## 使用总结
+
+1. 在分支branch下自由切换后，需要打tag，直接执行git tag xxx。得到一系列tag本地版本，最后进行git push --tags， 上传到远端。(分支切换时，需要上传完当前修改)
+
+2. 上传**本地已有项目**到github（同时远端也新建好了项目）
+- cd xxxx
+- git init
+- git add .
+- git commit -m ‘xxx’
+//关联到远程库
+- git remote add origin https://xxxxx    
+//获取远程库与本地同步合并（如果远程库不为空必须做这一步，否则后面的提交会失败）
+- git pull —rebase origin master  
+//把本地库的内容推送到远端，实际上把当前分支master推送到远程。
+- git push -u origin master
+
+
+
+
+
+
+
+
+
+
