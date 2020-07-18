@@ -81,6 +81,11 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 > git log  --oneline
 > git log --pretty=oneline
 
+3. **查看提交线**
+> **git log --graph --pretty=oneline --abbrev-commit**
+
+4. 查看**所有**分支的所有操作记录（包括已经**被删除**的 commit 记录和 reset 的操作）
+> git reflog
 ## 五：分支与标签
 
 1. 显示所有本地分支/标签
@@ -100,8 +105,11 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
  1. 合并指定分支到当前分支
  > git merge 'branch'
 
- 2. 衍合指定分支到当前分支
+ 2. 衍合指定分支到当前分支([使用](https://www.liaoxuefeng.com/wiki/896043488029600/1216289527823648 "使用"))
  > git rebase 'branch'
+
+- rebase：可以把本地未push的分叉提交历史整理成直线；
+- rebase：使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
 
 ## 七：远程操作
 
@@ -142,20 +150,25 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 
 1. 在分支branch下自由切换后，需要打tag，直接执行git tag xxx。得到一系列tag本地版本，最后进行git push --tags， 上传到远端。(分支切换时，需要上传完当前修改)
 
-2. 上传**本地已有项目**到github（同时远端也新建好了项目）
-- cd xxxx
-- git init
-- git add .
-- git commit -m ‘xxx’
-//关联到远程库
-- git remote add origin https://xxxxx    
-//获取远程库与本地同步合并（如果远程库不为空必须做这一步，否则后面的提交会失败）
-- git pull —rebase origin master  
-//把本地库的内容推送到远端，实际上把当前分支master推送到远程。
-- git push -u origin master
+2.  --global: 本地所有的Git仓库配置, 也可以指定某个仓库
+	> git config --global user.name "Your Name"
+	> git config --global user.email "email@example.com"
+	
+ - git config --system --list : 查看系统config
+ - git config --global  --list  :**查看当前用户配置**
+ - git config --local  --list    :查看当前仓库配置信息
 
-
-
+3. 上传**本地已有项目**到github（同时远端也新建好了项目）
+	- cd xxxx
+	- git init
+	- git add .
+	- git commit -m ‘xxx’
+	//关联到远程库
+	- git remote add origin https://xxxxx
+	//获取远程库与本地同步合并（如果远程库不为空必须做这一步，否则后面的提交会失败）
+	- git pull —rebase origin master
+	//把本地库的内容推送到远端，实际上把当前分支master推送到远程。
+	- git push -u origin master 
 
 
 
