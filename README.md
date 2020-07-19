@@ -105,9 +105,9 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
  1. 合并指定分支到当前分支
  > git merge 'branch'
 
- 2. 衍合指定分支到当前分支([使用](https://www.liaoxuefeng.com/wiki/896043488029600/1216289527823648 "使用"))
+ 2. 衍合指定分支到当前分支([使用](https://www.liaoxuefeng.com/wiki/896043488029600/1216289527823648 "使用"))  ：“变基”
  > git rebase 'branch'
-
+- 使用场景：本地多次commit（未push），当远程已有提交。首先pull，执行（git log --graph --pretty=oneline --abbrev-commit）会发现，本地commit还是基于之前，并没有基于其他人已经提交到远程的（并且有分叉）。此时执行git rebase，会发现本地commit是基于其他人已经提交的（且没有分叉）。最后push。
 - rebase：可以把本地未push的分叉提交历史整理成直线；
 - rebase：使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
 
