@@ -137,7 +137,9 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 8. 上传所有标签
 > git push --tags
 
+9. **拉去远程分支到本地**
 
+> git checkout -b test /origin/test      (git branch -a)
 
 
 ------------
