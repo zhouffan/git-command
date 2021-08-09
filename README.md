@@ -1,10 +1,73 @@
 # git-command（[git官网](https://git-scm.com/book/zh/v2 "git官网")）
 *注：使用 [mdeditor](http://www.mdeditor.com/ "mdeditor") markdown在线编辑器*
 
-master：默认分支    
-origin：默认远程版本库
-head：默认开发分支
-head^(head~1): head的 最新commit版本
+- master：默认新建的 **本地** 分支名
+
+- origin：默认名称为origin的远程库
+
+  git remote add yyy https://github.com/zhouffan/xxx.git  （不指定yyy）
+
+- **origin master**：代表着两个概念，前面的 **origin** 代表远程名，后面的 **master** 代表远程分支名。
+
+- head：默认开发分支
+
+- head^(head~1): head的 最新commit版本
+
+  
+
+- `git fetch origin master`
+
+  意思：从名为 **origin** 的远程上拉取名为 **master** 的分支到本地分支 **origin/master** 中。既然是拉取代码，当然需要同时指定远程名与分支名，所以分开写。
+
+- `git merge origin/master`
+
+  意思：合并名为 **origin/master** 的分支到当前所在分支。既然是分支的合并，当然就与远程名没有直接的关系，所以没有出现远程名。需要指定的是被合并的分支。
+
+- `git push origin master`
+
+  意思：推送本地的 **master** 分支到远程 **origin**，涉及到远程以及分支，当然也得分开写了。
+
+- `git fetch origin master stable oldstable`
+
+  一次性拉取多个分支的代码
+
+- `git merge origin/master hotfix-2275 hotfix-2276 hotfix-2290`
+
+  一次性合并多个分支的代码
+
+**远程分支定义**：
+
+```
+//添加远程分支名为yyy， 地址：https://github.com/zhouffan/xxx.git  （可以添加多个远程分支名）
+git remote add yyy https://github.com/zhouffan/xxx.git
+git remote -v
+//推送本地分支名为 main的，到名为yyy的远程地址（https://...），远程分支名为：main
+git push yyy main
+
+git init  : 默认会生成 名称为master的分支
+```
+
+
+
+
+
+```
+…or create a new repository on the command line
+echo "# xxx" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/zhouffan/xxx.git
+git push -u origin main
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/zhouffan/xxx.git
+git branch -M main
+git push -u origin main
+```
+
+
 
 ------------
 
@@ -137,7 +200,7 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 8. 上传所有标签
 > git push --tags
 
-9. **拉去远程分支到本地**
+9. **拉取远程分支到本地**
 
 > git checkout -b test /origin/test      (git branch -a)
 
@@ -146,6 +209,60 @@ zhouffandeMacBook-Pro:git-command zhouffan$ git push
 
 
 ------------
+
+
+
+## 八：Git各阶段撤销&回滚操作(git reset 和 get revert)
+
+[来源](https://www.huaweicloud.com/articles/fd86fea299d69efa115f3240e55e9d6b.html)
+
+1. 在工作区的代码。
+
+   ```
+   git checkout -- a.txt   # 丢弃某个文件，或者
+   git checkout -- .       # 丢弃全部
+   
+   注意：git checkout – . 丢弃全部，也包括：新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。这几个前提都说的是，回到暂存区之前的样子。对之前保存在暂存区里的代码不会有任何影响。对commit提交到本地分支的代码就更没影响了。当然，如果你之前压根都没有暂存或commit，那就是回到你上次pull下来的样子了。
+   ```
+
+2. 代码git add到缓存区，并未commit提交。
+
+   ```
+   git reset HEAD .  或者
+   git reset HEAD a.txt
+   
+   仅改变暂存区，并不改变工作区
+   这意味着在无任何其他操作的情况下，工作区中的实际文件同该命令运行之前无任何变化
+   ```
+
+3. git commit到本地分支、但没有git push到远程。
+
+   ```
+   git log # 得到你需要回退一次提交的commit id
+   git reset --hard   # 回到其中你想要的某个版    或者
+   git reset --hard HEAD^  # 回到最新的一次提交  或者
+   git reset HEAD^  # 此时代码保留，回到 git add 之前
+   ```
+
+4. git push把修改提交到远程仓库。
+
+   ```
+   1）通过git reset是直接删除指定的commit
+   git log # 得到你需要回退一次提交的commit id
+   git reset --hard xxxxxxx
+   git push origin HEAD --force # 强制提交一次，之前错误的提交就从远程仓库删除
+   
+   2）通过git revert是用一次新的commit来回滚之前的commit
+   git log # 得到你需要回退一次提交的commit id
+   git revert   # 撤销指定的版本，撤销也会作为一次提交进行保存
+   
+   3） git revert 和 git reset的区别
+   - git revert是用一次新的commit来回滚之前的commit，此次提交之前的commit都会被保留；
+   - git reset是回到某次提交，提交及之前的commit都会被保留，但是此commit id之后的修改都会被删除
+   ```
+
+   
+
 
 
 ## 使用总结
